@@ -11,25 +11,53 @@ from dotenv import load_dotenv
 
 # --- CONFIG ---
 load_dotenv()
-VECTOR_DB_DIR = "./patient_vectors"
+VECTOR_DB_BASE_DIR = "./patient_vectors"
 
-# --- Chroma Init ---
-chroma_client = chromadb.PersistentClient(path=VECTOR_DB_DIR)
+# Import shared utilities
+from patient_db_utils import get_patient_collection_name, get_patient_db_path
 
-# Create a collection with the default embedding function
-# This uses sentence-transformers for embeddings rather than OpenAI
-collection = chroma_client.get_or_create_collection(
-    name="patient_chunks",
-    embedding_function=embedding_functions.DefaultEmbeddingFunction()
-)
+def get_patient_collection(patient_id: str):
+    """Get or create a ChromaDB collection for a specific patient"""
+    patient_db_path = get_patient_db_path(patient_id)
+    
+    # Create the patient-specific database directory
+    os.makedirs(patient_db_path, exist_ok=True)
+    
+    # Create patient-specific chroma client
+    chroma_client = chromadb.PersistentClient(path=patient_db_path)
+    
+    # Create a valid collection name
+    collection_name = get_patient_collection_name(patient_id)
+    
+    print(f"Using collection name: {collection_name} for patient: {patient_id}")
+    
+    # Create a collection for this patient
+    collection = chroma_client.get_or_create_collection(
+        name=collection_name,
+        embedding_function=embedding_functions.DefaultEmbeddingFunction()
+    )
+    
+    return collection
 
-def flatten_patient_data(data: Dict[str, Any]) -> List[Dict[str, Any]]:
+def flatten_patient_data(data: Dict[str, Any], patient_id: str = None) -> List[Dict[str, Any]]:
     """
     Convert the patient JSON data into small text chunks for vector embedding.
     Each chunk represents a meaningful piece of patient information.
+    
+    Args:
+        data: Patient data dictionary
+        patient_id: Optional patient identifier to include in metadata
     """
     chunks: List[Dict[str, Any]] = []
     chunk_id = 0  # Counter to generate unique IDs
+    
+    # Determine patient ID from data if not provided
+    if not patient_id:
+        patient_info = data.get("patient", [])
+        if patient_info and isinstance(patient_info, list) and len(patient_info) > 0:
+            patient_id = patient_info[0].get("id", "unknown")
+        else:
+            patient_id = "unknown"
     
     # --- Process patient demographics ---
     for p in data.get("patient", []):
@@ -41,7 +69,8 @@ def flatten_patient_data(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         chunks.append({
             "text": demo_text,
             "type": "patient",
-            "id": f"patient_{chunk_id}"
+            "id": f"{patient_id}_patient_{chunk_id}",
+            "patient_id": patient_id
         })
         chunk_id += 1
 
@@ -53,7 +82,8 @@ def flatten_patient_data(data: Dict[str, Any]) -> List[Dict[str, Any]]:
             chunks.append({
                 "text": f"{key.capitalize()}: {item}",
                 "type": key,
-                "id": f"{key}_{chunk_id}"
+                "id": f"{patient_id}_{key}_{chunk_id}",
+                "patient_id": patient_id
             })
             chunk_id += 1
 
@@ -77,25 +107,45 @@ def flatten_patient_data(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     
     return chunks
 
-def index_patient_data(data: Dict[str, Any]) -> None:
+def index_patient_data(data: Dict[str, Any], patient_id: str = None) -> None:
     """
-    Create vector embeddings for patient data and store in ChromaDB
+    Create vector embeddings for patient data and store in patient-specific ChromaDB
+    
+    Args:
+        data: Patient data dictionary
+        patient_id: Patient identifier (required for patient-specific database)
     """
-    # Convert patient data to chunks
-    chunks = flatten_patient_data(data)
+    if not patient_id:
+        raise ValueError("patient_id is required for indexing")
+    
+    # Get patient-specific collection
+    collection = get_patient_collection(patient_id)
+    
+    # Convert patient data to chunks with patient_id
+    chunks = flatten_patient_data(data, patient_id)
     
     if not chunks:
         print("No data chunks generated. Check the format of your patient data.")
         return
     
-    # Add chunks to the vector database
+    # Clear existing data for this patient (since it's their own database, clear everything)
+    try:
+        # Get all existing IDs and delete them
+        existing_data = collection.get()
+        if existing_data['ids']:
+            collection.delete(ids=existing_data['ids'])
+            print(f"Cleared {len(existing_data['ids'])} existing items for patient {patient_id}")
+    except Exception as e:
+        print(f"Note: Could not clear existing data for patient {patient_id}: {e}")
+    
+    # Add chunks to the patient-specific vector database
     collection.add(
         documents=[c["text"] for c in chunks],
-        metadatas=[{"type": c["type"]} for c in chunks],
+        metadatas=[{"type": c["type"], "patient_id": c["patient_id"]} for c in chunks],
         ids=[c["id"] for c in chunks]
     )
     
-    print(f"Successfully indexed {len(chunks)} chunks of patient data.")
+    print(f"Successfully indexed {len(chunks)} chunks for patient {patient_id} in dedicated database.")
 
 def query_examples():
     """

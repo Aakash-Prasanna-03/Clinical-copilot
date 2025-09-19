@@ -71,23 +71,63 @@ def load_patient_data():
         print("Warning: patient_data.json not found")
         return {}
 
+def load_patient_by_id(patient_id: str):
+    """Load specific patient data by ID from the patient_data directory"""
+    patient_file_path = Path(f'patient_data/{patient_id}.json')
+    if patient_file_path.exists():
+        try:
+            with open(patient_file_path, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading patient {patient_id}: {e}")
+    return None
+
+def get_all_patient_files():
+    """Get list of all patient files"""
+    patient_dir = Path('patient_data')
+    if patient_dir.exists():
+        return [f.stem for f in patient_dir.glob('*.json')]
+    return []
+
 # Global patient data
 patient_data = load_patient_data()
 
 @app.route('/api/patient', methods=['GET'])
 def get_patient():
-    """Get patient demographic information"""
+    """Get patient demographic information (returns the most recently uploaded patient)"""
     try:
         patient_info = patient_data.get('patient', [])
         if patient_info:
-            return jsonify(patient_info[0])  # Return first patient
+            # Try to find the corresponding patient_id
+            current_patient = patient_info[0]
+            current_patient_id = None
+            
+            # Try to find patient_id in the global patient_data
+            if 'patient_id' in patient_data:
+                current_patient_id = patient_data['patient_id']
+            else:
+                # Fallback: search through patient files to find matching name
+                patient_files = get_all_patient_files()
+                for file_id in patient_files:
+                    file_data = load_patient_by_id(file_id)
+                    if file_data and 'patient' in file_data:
+                        file_patient = file_data['patient'][0] if file_data['patient'] else {}
+                        if file_patient.get('name') == current_patient.get('name'):
+                            current_patient_id = file_id
+                            break
+            
+            return jsonify({
+                **current_patient,
+                "patient_id": current_patient_id
+            })
         else:
             # Return default patient structure
             return jsonify({
-                "name": "John Doe",
-                "gender": "male",
-                "birthDate": "1980-01-01",
-                "id": "patient-1"
+                "name": "Unknown Patient",
+                "gender": "unknown",
+                "birthDate": "unknown",
+                "id": "unknown",
+                "patient_id": None
             })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -423,6 +463,17 @@ def copilot_query():
         query = data['query']
         n_results = data.get('n_results', 5)  # Number of context documents to retrieve
         filter_type = data.get('filter_type', None)  # Optional filter for specific data types
+        patient_id = data.get('patient_id', None)  # Optional patient ID for patient-specific queries
+        
+        # Determine which patient data to use
+        current_patient_data = patient_data  # Default to global patient data
+        if patient_id:
+            specific_patient_data = load_patient_by_id(patient_id)
+            if specific_patient_data:
+                current_patient_data = specific_patient_data
+                print(f"Using specific patient data for patient: {patient_id}")
+            else:
+                print(f"Patient {patient_id} not found, using default patient data")
         
         # Initialize Gemini copilot
         try:
@@ -434,23 +485,23 @@ def copilot_query():
         context_results = []
         if SEARCH_AVAILABLE:
             try:
-                # Check if collection exists
-                collection = get_db_collection()
-                if collection:
-                    context_results = search_patient_data_for_context(query, n_results, filter_type)
-                    print(f"Retrieved {len(context_results)} context results for query: {query}")
+                # For patient-specific search, we need a patient_id
+                if patient_id:
+                    # Search patient-specific database
+                    context_results = search_patient_data_for_context(query, n_results, filter_type, patient_id)
+                    print(f"Retrieved {len(context_results)} context results for patient {patient_id}")
                 else:
-                    print("No vector database collection found, using fallback mode")
+                    print("No patient_id provided - cannot perform patient-specific search")
             except Exception as e:
-                print(f"Error retrieving context from vector database: {e}")
+                print(f"Error retrieving context from patient database: {e}")
         
         # Generate response using Gemini with context
         if context_results:
-            # Use context-aware response generation
-            response = copilot.generate_copilot_response(query, context_results, patient_data)
+            # Use context-aware response generation with specific patient data
+            response = copilot.generate_copilot_response(query, context_results, current_patient_data)
         else:
-            # Fallback to simple response with basic patient data
-            response = copilot.generate_simple_response(query, patient_data)
+            # Fallback to simple response with specific patient data
+            response = copilot.generate_simple_response(query, current_patient_data)
             response["fallback_reason"] = "Vector search not available or no indexed data found"
         
         return jsonify(response)
@@ -552,6 +603,8 @@ def upload_json():
         
         # Process the data using FHIR ingester if available
         processed_data = json_data
+        patient_id = None
+        
         if INGESTER_AVAILABLE:
             try:
                 ingester = FHIRIngester()
@@ -560,6 +613,20 @@ def upload_json():
             except Exception as e:
                 print(f"Warning: FHIR processing failed, using raw data: {e}")
                 processed_data = json_data
+        
+        # Extract patient ID from the data
+        patient_info = processed_data.get("patient", [])
+        if patient_info and isinstance(patient_info, list) and len(patient_info) > 0:
+            patient_data_item = patient_info[0]
+            # Use patient_id from data if available, otherwise use name as identifier
+            if "patient_id" in processed_data:
+                patient_id = processed_data["patient_id"]
+            else:
+                patient_id = patient_data_item.get("name", "unknown_patient")
+        else:
+            patient_id = "unknown_patient"
+        
+        print(f"Processing data for patient: {patient_id}")
         
         # Update the global patient_data
         global patient_data
@@ -573,11 +640,25 @@ def upload_json():
         except Exception as e:
             print(f"Warning: Could not save patient data to file: {e}")
         
-        # Automatically index the data for searching
+        # Also save to patient-specific file in patient_data directory
+        try:
+            os.makedirs('patient_data', exist_ok=True)
+            patient_filename = f"patient_data/{patient_id}.json"
+            with open(patient_filename, 'w') as f:
+                json.dump(processed_data, f, indent=2)
+            print(f"Patient data saved to {patient_filename}")
+        except Exception as e:
+            print(f"Warning: Could not save patient-specific data to file: {e}")
+        
+        # Automatically index the data for searching with patient ID
         indexing_success = False
         if EMBED_AVAILABLE:
             try:
-                index_patient_data(processed_data)
+                index_patient_data(processed_data, patient_id)
+                indexing_success = True
+                print(f"Data indexed successfully for patient {patient_id}")
+            except Exception as e:
+                print(f"Warning: Could not index data for search: {e}")
                 indexing_success = True
                 print("Data indexed successfully for vector search")
             except Exception as e:
@@ -587,6 +668,7 @@ def upload_json():
             "message": "JSON data uploaded and processed successfully",
             "processed": True,
             "indexed": indexing_success,
+            "patient_id": patient_id,
             "data_summary": {
                 "conditions": len(processed_data.get('conditions', [])),
                 "medications": len(processed_data.get('medications', [])),
@@ -601,6 +683,43 @@ def upload_json():
     except Exception as e:
         print(f"Error processing JSON data: {e}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
+
+@app.route('/api/patients', methods=['GET'])
+def get_all_patients():
+    """Get list of all available patients"""
+    try:
+        patient_files = get_all_patient_files()
+        patients = []
+        
+        for patient_id in patient_files:
+            patient_data_item = load_patient_by_id(patient_id)
+            if patient_data_item and 'patient' in patient_data_item:
+                patient_info = patient_data_item['patient'][0] if patient_data_item['patient'] else {}
+                patients.append({
+                    "id": patient_id,
+                    "name": patient_info.get('name', patient_id),
+                    "gender": patient_info.get('gender', 'unknown'),
+                    "birthDate": patient_info.get('birthDate', 'unknown')
+                })
+        
+        return jsonify(patients)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/patient/<patient_id>', methods=['GET'])
+def get_specific_patient(patient_id):
+    """Get specific patient data by ID"""
+    try:
+        patient_data_item = load_patient_by_id(patient_id)
+        if not patient_data_item:
+            return jsonify({"error": "Patient not found"}), 404
+        
+        if 'patient' in patient_data_item and patient_data_item['patient']:
+            return jsonify(patient_data_item['patient'][0])
+        else:
+            return jsonify({"error": "Patient information not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     print("Starting Clinical Copilot API server...")

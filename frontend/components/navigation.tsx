@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useTheme } from "next-themes"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Brain, Users, LayoutDashboard, FileText, Settings, Menu, X, Sun, Moon } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Brain, Settings, Menu, X, Sun, Moon } from "lucide-react";
 
 const navigation = [
   { name: "Settings", href: "/settings", icon: Settings },
-]
+];
 
 export function Navigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
-  const { theme, setTheme } = useTheme()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
 
   return (
     <>
@@ -32,8 +32,8 @@ export function Navigation() {
         {/* Right: Navigation / Settings */}
         <div className="flex items-center gap-4">
           {navigation.map((item) => {
-            const Icon = item.icon
-            const isActive = pathname === item.href
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
             return (
               <Link key={item.name} href={item.href}>
                 <Button
@@ -47,7 +47,7 @@ export function Navigation() {
                   {item.name}
                 </Button>
               </Link>
-            )
+            );
           })}
           
           {/* Theme Toggle */}
@@ -62,7 +62,6 @@ export function Navigation() {
           </Button>
         </div>
       </nav>
-
 
       {/* Mobile Navigation */}
       <nav className="lg:hidden flex items-center justify-between px-4 py-3 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
@@ -96,8 +95,8 @@ export function Navigation() {
         <div className="lg:hidden bg-background/95 backdrop-blur-sm border-b border-border shadow-sm animate-slide-up">
           <div className="px-4 py-2 space-y-1">
             {navigation.map((item) => {
-              const Icon = item.icon
-              const isActive = pathname === item.href
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
               return (
                 <Link key={item.name} href={item.href} onClick={() => setMobileMenuOpen(false)}>
                   <Button
@@ -108,11 +107,11 @@ export function Navigation() {
                     {item.name}
                   </Button>
                 </Link>
-              )
+              );
             })}
           </div>
         </div>
       )}
     </>
-  )
+  );
 }

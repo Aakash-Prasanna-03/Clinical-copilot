@@ -4,75 +4,76 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Professional medical blue/teal color palette with high contrast */
-  --background: #ffffff;
-  --foreground: #1a1a2e;
+  /* Modern Light Theme - Clean and Professional */
+  --background: #fefefe;
+  --foreground: #0f1419;
   --card: #ffffff;
-  --card-foreground: #1a1a2e;
+  --card-foreground: #0f1419;
   --popover: #ffffff;
-  --popover-foreground: #1a1a2e;
-  --primary: #0369a1;
+  --popover-foreground: #0f1419;
+  --primary: #2563eb;
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
-  --accent: #e0f2fe;
-  --accent-foreground: #0c4a6e;
-  --destructive: #dc2626;
+  --secondary: #f8fafc;
+  --secondary-foreground: #1e293b;
+  --muted: #f1f5f9;
+  --muted-foreground: #6b7280;
+  --accent: #dbeafe;
+  --accent-foreground: #1e40af;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #f8fafc;
-  --ring: #0ea5e9;
-  --chart-1: #0369a1;
-  --chart-2: #0284c7;
-  --chart-3: #0ea5e9;
-  --chart-4: #38bdf8;
-  --chart-5: #7dd3fc;
-  --radius: 0.5rem;
-  --sidebar: #f8fafc;
-  --sidebar-foreground: #1e293b;
-  --sidebar-primary: #0369a1;
+  --border: #e5e7eb;
+  --input: #ffffff;
+  --ring: #3b82f6;
+  --chart-1: #2563eb;
+  --chart-2: #3b82f6;
+  --chart-3: #60a5fa;
+  --chart-4: #93c5fd;
+  --chart-5: #dbeafe;
+  --radius: 0.75rem;
+  --sidebar: #f9fafb;
+  --sidebar-foreground: #374151;
+  --sidebar-primary: #2563eb;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f1f5f9;
-  --sidebar-accent-foreground: #334155;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #0ea5e9;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #4b5563;
+  --sidebar-border: #d1d5db;
+  --sidebar-ring: #3b82f6;
 }
 
 .dark {
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --card: #1e293b;
-  --card-foreground: #f8fafc;
-  --popover: #1e293b;
-  --popover-foreground: #f8fafc;
-  --primary: #0ea5e9;
-  --primary-foreground: #0f172a;
-  --secondary: #334155;
-  --secondary-foreground: #f8fafc;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #334155;
-  --accent-foreground: #f8fafc;
+  /* Modern Dark Theme - High Contrast and Sleek */
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #111111;
+  --card-foreground: #fafafa;
+  --popover: #111111;
+  --popover-foreground: #fafafa;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1f1f23;
+  --secondary-foreground: #e5e5e5;
+  --muted: #151515;
+  --muted-foreground: #a1a1aa;
+  --accent: #1e40af;
+  --accent-foreground: #dbeafe;
   --destructive: #ef4444;
-  --destructive-foreground: #f8fafc;
-  --border: #334155;
-  --input: #1e293b;
-  --ring: #0ea5e9;
-  --chart-1: #0ea5e9;
-  --chart-2: #38bdf8;
-  --chart-3: #7dd3fc;
-  --chart-4: #bae6fd;
-  --chart-5: #e0f7ff;
-  --sidebar: #1e293b;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #0ea5e9;
-  --sidebar-primary-foreground: #0f172a;
-  --sidebar-accent: #334155;
-  --sidebar-accent-foreground: #f8fafc;
-  --sidebar-border: #334155;
-  --sidebar-ring: #0ea5e9;
+  --destructive-foreground: #fafafa;
+  --border: #27272a;
+  --input: #111111;
+  --ring: #3b82f6;
+  --chart-1: #3b82f6;
+  --chart-2: #60a5fa;
+  --chart-3: #93c5fd;
+  --chart-4: #bfdbfe;
+  --chart-5: #dbeafe;
+  --sidebar: #0f0f0f;
+  --sidebar-foreground: #e5e5e5;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #d4d4d8;
+  --sidebar-border: #27272a;
+  --sidebar-ring: #3b82f6;
 }
 
 /* Added custom medical animations and utilities */
@@ -133,34 +134,34 @@
   animation: scale-in 0.3s ease-out;
 }
 
-/* Medical gradient backgrounds */
+/* Modern gradient backgrounds */
 .medical-gradient {
-  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #dbeafe 100%);
 }
 
 .medical-card-gradient {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
 }
 
-/* Dark mode gradients */
+/* Dark mode gradients - More vibrant and distinct */
 .dark .medical-gradient {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #1a1a1a 100%);
 }
 
 .dark .medical-card-gradient {
-  background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+  background: linear-gradient(145deg, #111111 0%, #1a1a1a 50%, #1f1f23 100%);
 }
 
 /* Enhanced hover and interaction states */
 .interactive-hover {
-  @apply transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10;
+  @apply transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/20;
 }
 
 .card-interactive {
-  @apply transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/10 hover:border-primary/20 cursor-pointer;
+  @apply transition-all duration-300 ease-out hover:shadow-xl hover:shadow-primary/20 hover:border-primary/30 cursor-pointer transform hover:-translate-y-1;
 }
 
-/* Loading states */
+/* Enhanced loading states */
 .pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
@@ -168,46 +169,66 @@
 @keyframes pulse-glow {
   0%, 100% {
     opacity: 1;
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
   50% {
-    opacity: 0.8;
-    box-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
+    opacity: 0.9;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
   }
 }
 
-/* Status indicators */
+/* Improved button animations */
+.btn-primary {
+  @apply relative overflow-hidden bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-primary/25;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+/* Improved status indicators with better contrast */
 .status-success {
-  @apply bg-green-100 text-green-800 border-green-200;
+  @apply bg-emerald-50 text-emerald-900 border-emerald-200 shadow-sm;
 }
 
 .status-warning {
-  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
+  @apply bg-amber-50 text-amber-900 border-amber-200 shadow-sm;
 }
 
 .status-error {
-  @apply bg-red-100 text-red-800 border-red-200;
+  @apply bg-red-50 text-red-900 border-red-200 shadow-sm;
 }
 
 .status-info {
-  @apply bg-blue-100 text-blue-800 border-blue-200;
+  @apply bg-blue-50 text-blue-900 border-blue-200 shadow-sm;
 }
 
-/* Dark mode status indicators */
+/* Dark mode status indicators with high contrast */
 .dark .status-success {
-  @apply bg-green-900/50 text-green-200 border-green-700;
+  @apply bg-emerald-950/80 text-emerald-300 border-emerald-800 shadow-lg;
 }
 
 .dark .status-warning {
-  @apply bg-yellow-900/50 text-yellow-200 border-yellow-700;
+  @apply bg-amber-950/80 text-amber-300 border-amber-800 shadow-lg;
 }
 
 .dark .status-error {
-  @apply bg-red-900/50 text-red-200 border-red-700;
+  @apply bg-red-950/80 text-red-300 border-red-800 shadow-lg;
 }
 
 .dark .status-info {
-  @apply bg-blue-900/50 text-blue-200 border-blue-700;
+  @apply bg-blue-950/80 text-blue-300 border-blue-800 shadow-lg;
 }
 
 @theme inline {
@@ -255,33 +276,68 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans antialiased;
     overflow-x: hidden; /* Prevent horizontal scroll issues */
     line-height: 1.6;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  /* Ensure all text has good contrast */
+  /* Enhanced typography with better contrast */
   h1, h2, h3, h4, h5, h6 {
-    @apply text-foreground font-semibold;
+    @apply text-foreground font-semibold tracking-tight;
   }
+
+  h1 { @apply text-4xl lg:text-5xl; }
+  h2 { @apply text-3xl lg:text-4xl; }
+  h3 { @apply text-2xl lg:text-3xl; }
+  h4 { @apply text-xl lg:text-2xl; }
+  h5 { @apply text-lg lg:text-xl; }
+  h6 { @apply text-base lg:text-lg; }
 
   p {
-    @apply text-foreground;
+    @apply text-foreground/90 leading-relaxed;
   }
 
-  /* Smooth transitions for all interactive elements */
+  /* Enhanced transitions for all interactive elements */
   button,
   input,
   select,
   textarea,
   [role="button"] {
-    @apply transition-all duration-200 ease-out;
+    @apply transition-all duration-300 ease-out;
   }
 
-  /* Enhanced card hover effects */
+  /* Modern card hover effects */
   .card-hover {
-    @apply transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1;
+    @apply transition-all duration-300 ease-out hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-2 transform-gpu;
+  }
+
+  /* Better scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+
+  /* Dark mode scrollbar */
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/50;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/70;
   }
 
   /* Ensure dialogs don't interfere with page scrolling */
@@ -295,13 +351,22 @@
     overflow-y: auto;
   }
 
-  /* Better focus indicators */
+  /* Enhanced focus indicators */
   button:focus-visible,
   input:focus-visible,
   select:focus-visible,
   textarea:focus-visible,
   [role="button"]:focus-visible {
-    @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background outline-none;
+  }
+
+  /* Glass morphism effects */
+  .glass {
+    @apply backdrop-blur-md bg-background/80 border border-border/50;
+  }
+
+  .dark .glass {
+    @apply backdrop-blur-md bg-background/60 border border-border/50;
   }
 }
 

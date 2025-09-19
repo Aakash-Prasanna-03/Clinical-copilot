@@ -10,25 +10,44 @@ from dotenv import load_dotenv
 
 # --- CONFIG ---
 load_dotenv()
-VECTOR_DB_DIR = "./patient_vectors"
+VECTOR_DB_BASE_DIR = "./patient_vectors"
 
-def get_db_collection():
+# Import shared utilities
+from patient_db_utils import get_patient_collection_name, get_patient_db_path
+
+def get_patient_db_collection(patient_id: str):
     """
-    Initialize and return the ChromaDB collection
+    Get the ChromaDB collection for a specific patient
     """
-    chroma_client = chromadb.PersistentClient(path=VECTOR_DB_DIR)
+    if not patient_id:
+        return None
+        
+    patient_db_path = get_patient_db_path(patient_id)
     
-    # Get the existing collection with embeddings
+    # Check if patient database exists
+    if not os.path.exists(patient_db_path):
+        print(f"No vector database found for patient {patient_id}")
+        return None
+    
     try:
+        chroma_client = chromadb.PersistentClient(path=patient_db_path)
+        collection_name = get_patient_collection_name(patient_id)
+        print(f"Looking for collection: {collection_name} for patient: {patient_id}")
         collection = chroma_client.get_collection(
-            name="patient_chunks",
+            name=collection_name,
             embedding_function=embedding_functions.DefaultEmbeddingFunction()
         )
         return collection
     except Exception as e:
-        print(f"Error accessing collection: {str(e)}")
-        print("Make sure you've run embed_patient_data.py first to create the embeddings.")
+        print(f"Error accessing collection for patient {patient_id}: {str(e)}")
         return None
+
+def get_db_collection():
+    """
+    Legacy function for backward compatibility - returns None since we now use patient-specific collections
+    """
+    print("Warning: get_db_collection() is deprecated. Use get_patient_db_collection(patient_id) instead.")
+    return None
 
 def search_patient_data(query: str, n_results: int = 5, filter_type: Optional[str] = None) -> None:
     """
@@ -72,31 +91,47 @@ def search_patient_data(query: str, n_results: int = 5, filter_type: Optional[st
         print(f"{i+1}. {text} (type: {metadata['type']}, relevance: {relevance:.2f})")
 
 
-def search_patient_data_for_context(query: str, n_results: int = 5, filter_type: Optional[str] = None) -> List[Dict[str, Any]]:
+def search_patient_data_for_context(query: str, n_results: int = 5, filter_type: Optional[str] = None, patient_id: Optional[str] = None) -> List[Dict[str, Any]]:
     """
-    Search the vector database for patient data and return structured results for context
+    Search the patient-specific vector database for patient data and return structured results for context
     
     Args:
         query: The search query
         n_results: Number of results to return
         filter_type: Filter by data type (e.g., 'conditions', 'medications')
+        patient_id: Patient ID to search (required for patient-specific search)
         
     Returns:
         List of dictionaries containing search results with text, metadata, and relevance scores
     """
-    collection = get_db_collection()
-    if not collection:
+    if not patient_id:
+        print("Warning: No patient_id provided for search. Cannot perform patient-specific search.")
         return []
     
-    # Prepare filter if specified
-    where_filter = {"type": filter_type} if filter_type else None
+    # Get patient-specific collection
+    collection = get_patient_db_collection(patient_id)
+    if not collection:
+        print(f"No vector database found for patient {patient_id}")
+        return []
     
-    # Search the collection
-    results = collection.query(
-        query_texts=[query],
-        n_results=n_results,
-        where=where_filter
-    )
+    # Prepare filter - only need type filter now since we're searching patient-specific database
+    where_filter = {}
+    if filter_type:
+        where_filter["type"] = filter_type
+    
+    # Only use where filter if we have conditions
+    where_param = where_filter if where_filter else None
+    
+    # Search the patient-specific collection
+    try:
+        results = collection.query(
+            query_texts=[query],
+            n_results=n_results,
+            where=where_param
+        )
+    except Exception as e:
+        print(f"Error searching patient {patient_id} database: {e}")
+        return []
     
     formatted_results = []
     if results["documents"][0]:

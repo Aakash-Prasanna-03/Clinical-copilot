@@ -18,7 +18,7 @@ class GeminiCopilot:
         
         # Initialize the model with specific configuration for medical contexts
         self.model = genai.GenerativeModel(
-            model_name='gemini-1.5-flash',
+            model_name='gemini-2.0-flash',
             generation_config=genai.types.GenerationConfig(
                 temperature=0.3,  # Lower temperature for more consistent medical advice
                 top_p=0.8,
@@ -61,7 +61,7 @@ class GeminiCopilot:
                 "context_used": len(context_results),
                 "confidence": self._calculate_confidence(context_results),
                 "response_metadata": {
-                    "model": "gemini-1.5-flash",
+                    "model": "gemini-2.0-flash",
                     "temperature": 0.3,
                     "context_sources": [result["type"] for result in context_results]
                 }
@@ -224,7 +224,7 @@ class GeminiCopilot:
                 "context_used": 0,
                 "confidence": 0.5,  # Medium confidence for general responses
                 "response_metadata": {
-                    "model": "gemini-1.5-flash",
+                    "model": "gemini-2.0-flash",
                     "temperature": 0.3,
                     "fallback_mode": True
                 }
