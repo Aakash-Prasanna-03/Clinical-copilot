@@ -1,0 +1,483 @@
+"use client"
+
+import { useState } from "react"
+import { Navigation } from "@/components/navigation"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { Separator } from "@/components/ui/separator"
+import {
+  ArrowLeft,
+  Copy,
+  ExternalLink,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  FileText,
+  Brain,
+  TrendingUp,
+  Users,
+  Clock,
+} from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+
+// Mock detailed recommendation data
+const mockRecommendation = {
+  id: 1,
+  title: "Blood Pressure Optimization",
+  category: "Medication Management",
+  summary: "Consider increasing Lisinopril dose to 15mg daily based on recent BP readings and patient tolerance.",
+  fullDescription: `Based on the patient's current blood pressure readings (128/82 mmHg) and excellent tolerance of the current 10mg Lisinopril dose, increasing to 15mg daily is recommended to achieve target BP <130/80 mmHg as per AHA/ACC guidelines.
+
+The patient has demonstrated good medication adherence and has not experienced any adverse effects from the current ACE inhibitor therapy. The gradual dose increase approach minimizes risk while optimizing cardiovascular protection.`,
+
+  riskBenefit: {
+    risk: "Low",
+    benefit: "High",
+    riskDetails: [
+      "Minimal risk of hypotension given current BP levels",
+      "Low probability of hyperkalemia with normal kidney function",
+      "Rare incidence of angioedema with ACE inhibitors",
+    ],
+    benefitDetails: [
+      "Improved cardiovascular outcomes",
+      "Reduced risk of stroke and heart attack",
+      "Better long-term kidney protection",
+      "Potential reduction in healthcare costs",
+    ],
+  },
+
+  confidence: 85,
+  confidenceFactors: {
+    evidenceQuality: 90,
+    patientMatch: 85,
+    safetyProfile: 95,
+    guidelineAlignment: 88,
+  },
+
+  patientFactors: [
+    {
+      factor: "Current Blood Pressure",
+      value: "128/82 mmHg",
+      impact: "Supports dose increase",
+      weight: "High",
+    },
+    {
+      factor: "Age",
+      value: "34 years",
+      impact: "Low cardiovascular risk profile",
+      weight: "Medium",
+    },
+    {
+      factor: "Medication Tolerance",
+      value: "Excellent",
+      impact: "No adverse effects reported",
+      weight: "High",
+    },
+    {
+      factor: "Kidney Function",
+      value: "Normal (Cr: 0.9)",
+      impact: "Safe for ACE inhibitor use",
+      weight: "High",
+    },
+    {
+      factor: "Adherence History",
+      value: "95%+",
+      impact: "Reliable medication taking",
+      weight: "Medium",
+    },
+  ],
+
+  evidenceSources: [
+    {
+      title: "2017 AHA/ACC Hypertension Guidelines",
+      type: "Clinical Guidelines",
+      summary: "Recommends BP target <130/80 for adults with hypertension",
+      url: "https://pubmed.ncbi.nlm.nih.gov/29146535/",
+      relevance: "High",
+      quality: "A",
+    },
+    {
+      title: "SPRINT Trial - Intensive BP Control",
+      type: "Randomized Controlled Trial",
+      summary: "Demonstrated cardiovascular benefits of intensive BP control",
+      url: "https://pubmed.ncbi.nlm.nih.gov/26551272/",
+      relevance: "High",
+      quality: "A",
+    },
+    {
+      title: "ACE Inhibitors in Hypertension - Cochrane Review",
+      type: "Systematic Review",
+      summary: "Meta-analysis showing efficacy and safety of ACE inhibitors",
+      url: "https://pubmed.ncbi.nlm.nih.gov/24737367/",
+      relevance: "Medium",
+      quality: "A",
+    },
+    {
+      title: "Lisinopril Dose-Response Study",
+      type: "Clinical Study",
+      summary: "Dose-dependent BP reduction with minimal side effects",
+      url: "https://pubmed.ncbi.nlm.nih.gov/example/",
+      relevance: "Medium",
+      quality: "B",
+    },
+  ],
+
+  implementation: {
+    timeline: "2-4 weeks",
+    monitoring: [
+      "Check BP in 2 weeks after dose increase",
+      "Monitor for symptoms of hypotension",
+      "Recheck electrolytes in 4 weeks",
+      "Follow-up appointment in 6 weeks",
+    ],
+    alternatives: [
+      "Add low-dose thiazide diuretic",
+      "Switch to ARB if ACE inhibitor intolerance develops",
+      "Consider calcium channel blocker as add-on therapy",
+    ],
+  },
+
+  createdAt: "2024-01-15T10:30:00Z",
+  updatedAt: "2024-01-15T10:30:00Z",
+}
+
+export default function RecommendationDetailsPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyToNotes = async () => {
+    const noteText = `
+Clinical Recommendation: ${mockRecommendation.title}
+
+Summary: ${mockRecommendation.summary}
+
+Patient Factors Considered:
+${mockRecommendation.patientFactors.map((f) => `• ${f.factor}: ${f.value} - ${f.impact}`).join("\n")}
+
+Evidence Sources:
+${mockRecommendation.evidenceSources.map((s) => `• ${s.title} (${s.type})`).join("\n")}
+
+Implementation Plan:
+${mockRecommendation.implementation.monitoring.map((m) => `• ${m}`).join("\n")}
+
+Generated by Clinical Copilot AI - ${new Date().toLocaleDateString()}
+    `.trim()
+
+    try {
+      await navigator.clipboard.writeText(noteText)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error("Failed to copy to clipboard:", err)
+    }
+  }
+
+  const getQualityColor = (quality: string) => {
+    switch (quality) {
+      case "A":
+        return "bg-green-100 text-green-800 border-green-200"
+      case "B":
+        return "bg-blue-100 text-blue-800 border-blue-200"
+      case "C":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200"
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200"
+    }
+  }
+
+  const getRelevanceColor = (relevance: string) => {
+    switch (relevance) {
+      case "High":
+        return "bg-red-100 text-red-800 border-red-200"
+      case "Medium":
+        return "bg-orange-100 text-orange-800 border-orange-200"
+      case "Low":
+        return "bg-gray-100 text-gray-800 border-gray-200"
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200"
+    }
+  }
+
+  return (
+    <div className="min-h-screen medical-gradient">
+      <Navigation />
+
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-8 animate-slide-up">
+          <Button variant="outline" onClick={() => router.back()} className="gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Button>
+          <div>
+            <h1 className="text-3xl font-bold text-foreground">{mockRecommendation.title}</h1>
+            <p className="text-muted-foreground">{mockRecommendation.category}</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Summary Card */}
+            <Card className="medical-card-gradient shadow-lg border-0 animate-fade-in">
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle className="text-xl">Recommendation Summary</CardTitle>
+                    <CardDescription>AI-generated clinical guidance</CardDescription>
+                  </div>
+                  <div className="flex gap-2">
+                    <Badge className="bg-green-100 text-green-800 border-green-200">
+                      Risk: {mockRecommendation.riskBenefit.risk}
+                    </Badge>
+                    <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+                      Benefit: {mockRecommendation.riskBenefit.benefit}
+                    </Badge>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground leading-relaxed">{mockRecommendation.summary}</p>
+
+                <Separator />
+
+                <div>
+                  <h4 className="font-medium mb-3">Detailed Analysis</h4>
+                  <div className="prose prose-sm max-w-none text-muted-foreground">
+                    {mockRecommendation.fullDescription.split("\n\n").map((paragraph, index) => (
+                      <p key={index} className="mb-3 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <Button onClick={handleCopyToNotes} className="gap-2 bg-primary hover:bg-primary/90">
+                    <Copy className="h-4 w-4" />
+                    {copied ? "Copied!" : "Copy to Notes"}
+                  </Button>
+                  <Button variant="outline" className="gap-2 bg-transparent">
+                    <FileText className="h-4 w-4" />
+                    Export PDF
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Risk-Benefit Analysis */}
+            <Card className="medical-card-gradient shadow-lg border-0 animate-fade-in">
+              <CardHeader>
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-primary" />
+                  Risk-Benefit Analysis
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-medium mb-3 flex items-center gap-2 text-red-600">
+                      <AlertTriangle className="h-4 w-4" />
+                      Potential Risks
+                    </h4>
+                    <ul className="space-y-2">
+                      {mockRecommendation.riskBenefit.riskDetails.map((risk, index) => (
+                        <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                          {risk}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium mb-3 flex items-center gap-2 text-green-600">
+                      <CheckCircle className="h-4 w-4" />
+                      Expected Benefits
+                    </h4>
+                    <ul className="space-y-2">
+                      {mockRecommendation.riskBenefit.benefitDetails.map((benefit, index) => (
+                        <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Patient Factors */}
+            <Card className="medical-card-gradient shadow-lg border-0 animate-fade-in">
+              <CardHeader>
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <Users className="h-5 w-5 text-primary" />
+                  Patient Factors Considered
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {mockRecommendation.patientFactors.map((factor, index) => (
+                    <div key={index} className="p-4 bg-muted/20 rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-medium">{factor.factor}</h4>
+                        <Badge
+                          variant="outline"
+                          className={
+                            factor.weight === "High"
+                              ? "border-red-200 text-red-800"
+                              : factor.weight === "Medium"
+                                ? "border-orange-200 text-orange-800"
+                                : "border-gray-200 text-gray-800"
+                          }
+                        >
+                          {factor.weight} Impact
+                        </Badge>
+                      </div>
+                      <p className="text-sm font-medium text-primary mb-1">{factor.value}</p>
+                      <p className="text-sm text-muted-foreground">{factor.impact}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Implementation Plan */}
+            <Card className="medical-card-gradient shadow-lg border-0 animate-fade-in">
+              <CardHeader>
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-primary" />
+                  Implementation Plan
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <h4 className="font-medium mb-2">Timeline</h4>
+                  <p className="text-muted-foreground">{mockRecommendation.implementation.timeline}</p>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3">Monitoring Requirements</h4>
+                  <ul className="space-y-2">
+                    {mockRecommendation.implementation.monitoring.map((item, index) => (
+                      <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3">Alternative Options</h4>
+                  <ul className="space-y-2">
+                    {mockRecommendation.implementation.alternatives.map((alt, index) => (
+                      <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <Info className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        {alt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Confidence Score */}
+            <Card className="medical-card-gradient shadow-lg border-0 animate-fade-in">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Brain className="h-5 w-5 text-primary" />
+                  AI Confidence
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">{mockRecommendation.confidence}%</div>
+                  <Progress value={mockRecommendation.confidence} className="w-full h-3" />
+                </div>
+
+                <Separator />
+
+                <div className="space-y-3">
+                  <h4 className="font-medium text-sm">Confidence Breakdown</h4>
+                  {Object.entries(mockRecommendation.confidenceFactors).map(([key, value]) => (
+                    <div key={key} className="flex justify-between items-center">
+                      <span className="text-xs capitalize">{key.replace(/([A-Z])/g, " $1").trim()}</span>
+                      <div className="flex items-center gap-2">
+                        <Progress value={value} className="w-16 h-1" />
+                        <span className="text-xs font-medium w-8">{value}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Evidence Sources */}
+            <Card className="medical-card-gradient shadow-lg border-0 animate-fade-in">
+              <CardHeader>
+                <CardTitle className="text-lg">Evidence Sources</CardTitle>
+                <CardDescription>{mockRecommendation.evidenceSources.length} supporting references</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {mockRecommendation.evidenceSources.map((source, index) => (
+                  <div key={index} className="p-3 bg-muted/20 rounded-lg space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="font-medium text-sm leading-tight">{source.title}</h4>
+                      <div className="flex gap-1 flex-shrink-0">
+                        <Badge className={getQualityColor(source.quality)} size="sm">
+                          {source.quality}
+                        </Badge>
+                        <Badge className={getRelevanceColor(source.relevance)} size="sm">
+                          {source.relevance}
+                        </Badge>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{source.type}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{source.summary}</p>
+                    <Button
+                      variant="link"
+                      className="p-0 h-auto text-xs text-primary"
+                      onClick={() => window.open(source.url, "_blank")}
+                    >
+                      <ExternalLink className="h-3 w-3 mr-1" />
+                      View Source
+                    </Button>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            {/* Metadata */}
+            <Card className="medical-card-gradient shadow-lg border-0 animate-fade-in">
+              <CardHeader>
+                <CardTitle className="text-lg">Recommendation Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                <div>
+                  <span className="text-muted-foreground">Generated:</span>
+                  <p className="font-medium">{new Date(mockRecommendation.createdAt).toLocaleString()}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Last Updated:</span>
+                  <p className="font-medium">{new Date(mockRecommendation.updatedAt).toLocaleString()}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Recommendation ID:</span>
+                  <p className="font-medium font-mono">REC-{mockRecommendation.id.toString().padStart(6, "0")}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

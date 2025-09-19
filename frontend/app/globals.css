@@ -1,0 +1,308 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Professional medical blue/teal color palette with high contrast */
+  --background: #ffffff;
+  --foreground: #1a1a2e;
+  --card: #ffffff;
+  --card-foreground: #1a1a2e;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a2e;
+  --primary: #0369a1;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f8fafc;
+  --muted-foreground: #64748b;
+  --accent: #e0f2fe;
+  --accent-foreground: #0c4a6e;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #f8fafc;
+  --ring: #0ea5e9;
+  --chart-1: #0369a1;
+  --chart-2: #0284c7;
+  --chart-3: #0ea5e9;
+  --chart-4: #38bdf8;
+  --chart-5: #7dd3fc;
+  --radius: 0.5rem;
+  --sidebar: #f8fafc;
+  --sidebar-foreground: #1e293b;
+  --sidebar-primary: #0369a1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #334155;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #0ea5e9;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  --primary: #0ea5e9;
+  --primary-foreground: #0f172a;
+  --secondary: #334155;
+  --secondary-foreground: #f8fafc;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #334155;
+  --accent-foreground: #f8fafc;
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
+  --border: #334155;
+  --input: #1e293b;
+  --ring: #0ea5e9;
+  --chart-1: #0ea5e9;
+  --chart-2: #38bdf8;
+  --chart-3: #7dd3fc;
+  --chart-4: #bae6fd;
+  --chart-5: #e0f7ff;
+  --sidebar: #1e293b;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #334155;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: #334155;
+  --sidebar-ring: #0ea5e9;
+}
+
+/* Added custom medical animations and utilities */
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+/* Medical gradient backgrounds */
+.medical-gradient {
+  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+}
+
+.medical-card-gradient {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* Dark mode gradients */
+.dark .medical-gradient {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.dark .medical-card-gradient {
+  background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+}
+
+/* Enhanced hover and interaction states */
+.interactive-hover {
+  @apply transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10;
+}
+
+.card-interactive {
+  @apply transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/10 hover:border-primary/20 cursor-pointer;
+}
+
+/* Loading states */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
+  }
+}
+
+/* Status indicators */
+.status-success {
+  @apply bg-green-100 text-green-800 border-green-200;
+}
+
+.status-warning {
+  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
+}
+
+.status-error {
+  @apply bg-red-100 text-red-800 border-red-200;
+}
+
+.status-info {
+  @apply bg-blue-100 text-blue-800 border-blue-200;
+}
+
+/* Dark mode status indicators */
+.dark .status-success {
+  @apply bg-green-900/50 text-green-200 border-green-700;
+}
+
+.dark .status-warning {
+  @apply bg-yellow-900/50 text-yellow-200 border-yellow-700;
+}
+
+.dark .status-error {
+  @apply bg-red-900/50 text-red-200 border-red-700;
+}
+
+.dark .status-info {
+  @apply bg-blue-900/50 text-blue-200 border-blue-700;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden; /* Prevent horizontal scroll issues */
+    line-height: 1.6;
+  }
+
+  /* Ensure all text has good contrast */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground font-semibold;
+  }
+
+  p {
+    @apply text-foreground;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  button,
+  input,
+  select,
+  textarea,
+  [role="button"] {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  /* Enhanced card hover effects */
+  .card-hover {
+    @apply transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1;
+  }
+
+  /* Ensure dialogs don't interfere with page scrolling */
+  [data-radix-scroll-area-viewport] {
+    scroll-behavior: smooth;
+  }
+  
+  /* Fix potential dialog content overflow issues */
+  [data-slot="dialog-content"] {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Better focus indicators */
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+
