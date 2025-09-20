@@ -513,8 +513,7 @@ def copilot_query():
             "query": data.get('query', '') if 'data' in locals() else '',
             "answer": "I apologize, but I encountered an error while processing your query. Please try again.",
             "citations": [],
-            "context_used": 0,
-            "confidence": 0.0
+            "context_used": 0
         }), 500
 
 @app.route('/api/index', methods=['POST'])

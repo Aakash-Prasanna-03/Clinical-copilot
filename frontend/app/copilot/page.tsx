@@ -31,7 +31,6 @@ interface CopilotResponse {
   answer: string
   citations: Citation[]
   context_used: number
-  confidence: number
   response_metadata: {
     model: string
     temperature: number
@@ -136,12 +135,6 @@ export default function CopilotPage() {
       case 'patient': return "bg-gradient-to-r from-amber-100 to-amber-50 dark:from-amber-950/50 dark:to-amber-900/50 text-amber-800 dark:text-amber-200 border-amber-200 dark:border-amber-800 shadow-sm"
       default: return "bg-gradient-to-r from-muted to-muted/50 text-muted-foreground border-border shadow-sm"
     }
-  }
-
-  const getRelevanceColor = (relevance: number) => {
-    if (relevance >= 0.8) return "text-emerald-700 dark:text-emerald-300 font-semibold bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800"
-    if (relevance >= 0.6) return "text-amber-700 dark:text-amber-300 font-semibold bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800"
-    return "text-red-700 dark:text-red-300 font-semibold bg-red-50 dark:bg-red-950/50 px-3 py-1 rounded-full border border-red-200 dark:border-red-800"
   }
 
   // Function to clean markdown formatting
@@ -427,15 +420,6 @@ export default function CopilotPage() {
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center gap-3 bg-blue-100/60 dark:bg-blue-900/30 px-4 py-3 rounded-xl shadow-sm">
-                            <Brain className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                            <div>
-                              <span className="font-bold text-blue-800 dark:text-blue-200 text-sm">AI Confidence</span>
-                              <div className={`ml-2 px-3 py-1 rounded-full font-bold text-lg inline-block shadow-sm ${getRelevanceColor(copilotResponse.confidence || 0.5)}`}>
-                                {Math.round((copilotResponse.confidence || 0.5) * 100)}%
-                              </div>
-                            </div>
-                          </div>
                         </div>
                         <div className="text-xs text-muted-foreground bg-muted/50 px-3 py-2 rounded-lg">
                           Model: {copilotResponse.response_metadata?.model || 'Medical AI'}
@@ -473,9 +457,6 @@ export default function CopilotPage() {
                                   <Badge variant="outline" className={`${getTypeColor(citation.type)} font-bold text-sm lg:text-base px-3 lg:px-4 py-1.5 rounded-full shadow-sm`}>
                                     {citation.type.charAt(0).toUpperCase() + citation.type.slice(1)}
                                   </Badge>
-                                  <div className={`text-sm font-semibold ${getRelevanceColor(citation.relevance)}`}>
-                                    {Math.round(citation.relevance * 100)}% match
-                                  </div>
                                 </div>
                                 <p className="text-foreground/90 leading-relaxed font-medium mb-4 lg:mb-5 text-lg lg:text-xl bg-background/40 dark:bg-background/20 p-4 rounded-xl border border-border/50">
                                   {cleanMarkdownText(citation.text)}

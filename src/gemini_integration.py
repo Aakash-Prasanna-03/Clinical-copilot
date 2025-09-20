@@ -59,7 +59,6 @@ class GeminiCopilot:
                 "answer": parsed_response["answer"],
                 "citations": citations,
                 "context_used": len(context_results),
-                "confidence": self._calculate_confidence(context_results),
                 "response_metadata": {
                     "model": "gemini-2.0-flash",
                     "temperature": 0.3,
@@ -73,8 +72,7 @@ class GeminiCopilot:
                 "error": f"Error generating response: {str(e)}",
                 "answer": "I apologize, but I encountered an error while processing your query. Please try again or rephrase your question.",
                 "citations": [],
-                "context_used": 0,
-                "confidence": 0.0
+                "context_used": 0
             }
     
     def _format_context(self, context_results: List[Dict[str, Any]]) -> str:
@@ -161,23 +159,6 @@ class GeminiCopilot:
         return {
             "answer": response_text.strip()
         }
-    
-    def _calculate_confidence(self, context_results: List[Dict[str, Any]]) -> float:
-        """Calculate a confidence score based on the quality of context results"""
-        if not context_results:
-            return 0.0
-        
-        # Calculate confidence based on relevance scores
-        relevance_scores = [result.get("relevance", 0) for result in context_results]
-        avg_relevance = sum(relevance_scores) / len(relevance_scores)
-        
-        # Factor in the number of results (more context generally means higher confidence)
-        context_factor = min(len(context_results) / 5.0, 1.0)  # Cap at 5 results
-        
-        # Combined confidence score
-        confidence = (avg_relevance * 0.7) + (context_factor * 0.3)
-        
-        return round(confidence, 2)
 
     def generate_simple_response(self, query: str, patient_data: Dict[str, Any] = None) -> Dict[str, Any]:
         """
@@ -222,7 +203,6 @@ class GeminiCopilot:
                 "answer": response.text.strip(),
                 "citations": [],
                 "context_used": 0,
-                "confidence": 0.5,  # Medium confidence for general responses
                 "response_metadata": {
                     "model": "gemini-2.0-flash",
                     "temperature": 0.3,
@@ -236,6 +216,5 @@ class GeminiCopilot:
                 "error": f"Error generating response: {str(e)}",
                 "answer": "I apologize, but I encountered an error while processing your query. Please try again or rephrase your question.",
                 "citations": [],
-                "context_used": 0,
-                "confidence": 0.0
+                "context_used": 0
             }
