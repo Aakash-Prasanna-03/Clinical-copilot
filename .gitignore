@@ -4,6 +4,14 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+
+# API Keys and secrets
+*.key
+*.pem
+.secrets/
+secrets.json
+config/secrets.json
 
 # Python
 __pycache__/
@@ -28,6 +36,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
 
 # Virtual environments
 venv/
@@ -65,10 +75,30 @@ fhir/
 *.db
 *.sqlite3
 chroma.sqlite3
+patient_uploads/
+uploads/
+user_data/
+
+# AI Model and Vector databases
+models/
+embeddings/
+vector_db/
+*.pkl
+*.model
+*.bin
 
 # Logs
 logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+debug.log
+error.log
+access.log
+combined.log
 
 # IDE and editors
 .vscode/
@@ -76,6 +106,11 @@ logs/
 *.swp
 *.swo
 *~
+*.sublime-project
+*.sublime-workspace
+.atom/
+.fleet/
+.history/
 
 # OS generated files
 .DS_Store
@@ -85,11 +120,18 @@ logs/
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
 
 # Temporary files
 *.tmp
 *.temp
 .cache/
+.parcel-cache/
+.sass-cache/
+.stylelintcache
+*.tgz
+*.tar.gz
 
 # Coverage reports
 htmlcov/
@@ -130,3 +172,41 @@ celerybeat.pid
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Backup files
+*.bak
+*.backup
+*.orig
+*.rej
+.#*
+*~
+
+# Docker
+.docker/
+docker-compose.override.yml
+Dockerfile.local
+
+# Security and keys
+*.key
+*.pem
+*.p12
+*.p8
+*.cer
+*.crt
+*.der
+*.pfx
+
+# Media files (if not needed in repo)
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.wav
+*.mp3
+
+# Large data files
+*.csv
+*.xlsx
+*.xls
+*.json.bak

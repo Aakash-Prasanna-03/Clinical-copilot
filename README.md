@@ -14,15 +14,15 @@ At a Glance
 
 🌟Landing Page<br>
 <br>
-<img width="1346" height="645" alt="Screenshot 2025-09-19 093731" src="https://github.com/user-attachments/assets/842f1c28-e364-41ed-8e74-467ffc805fb9" />
+<img width="1346" height="645" alt="Landing Page" src="./frontend/public/screenshot1.jpg" />
 <br>
 🌟Upload FHIR's or JSON<br>
 <br>
-<img width="1335" height="648" alt="Screenshot 2025-09-19 094120" src="https://github.com/user-attachments/assets/a0c643b0-8b65-434f-bf8b-27f903cf9933" />
+<img width="1335" height="648" alt="Data Upload" src="./frontend/public/screenshot2.jpg" />
 <br>
 🌟Ask AI for Smarter Clinical Decisions<br>
 <br>
-<img width="1339" height="638" alt="image" src="https://github.com/user-attachments/assets/c34bd059-e6fe-4561-88f5-e76b7c77fdd7" />
+<img width="1339" height="638" alt="AI Analysis" src="./frontend/public/screenshot3.jpg" />
 
 
 
@@ -43,10 +43,12 @@ At a Glance
 - **Mobile-responsive design** for healthcare on-the-go
 
 ### 🧠 **AI-Powered Clinical Recommendations**
-- **Evidence-based decision support** with confidence scoring
+- **Google Gemini AI integration** with medical-grade response generation
+- **Evidence-based decision support** with confidence scoring and citations
 - **Risk-benefit analysis** for treatment options
 - **Patient-specific recommendations** based on individual medical history
 - **Clinical guideline integration** with up-to-date medical standards
+- **Vector-powered semantic search** with contextual AI responses
 
 ### 🚀 **Modern Healthcare UI/UX**
 - **Professional medical-grade design** with accessibility compliance
@@ -98,11 +100,14 @@ At a Glance
 - **State Management**: React Hooks + Context API
 - **Theme**: next-themes for dark/light mode
 - **Forms**: React Hook Form with Zod validation
+- **Authentication**: Supabase integration
+- **Analytics**: Vercel Analytics
 
 #### Backend
 - **Framework**: Flask 3.0 (Python)
-- **AI/ML**: sentence-transformers, transformers, torch
+- **AI/ML**: Google Gemini 2.0-flash, sentence-transformers, transformers, torch
 - **Vector Database**: ChromaDB 0.4.24
+- **Authentication**: Supabase integration
 - **Data Processing**: NumPy, JSON parsing
 - **API**: RESTful with CORS support
 - **Environment**: python-dotenv for configuration
@@ -110,9 +115,10 @@ At a Glance
 #### Data & Integration
 - **Standards**: FHIR R4 compliance
 - **Database**: ChromaDB (persistent vector storage)
+- **AI Model**: Google Gemini 2.0-flash for clinical analysis
 - **Embeddings**: Sentence-BERT for semantic search
 - **File Support**: JSON, FHIR bundles
-- **Search**: Vector similarity + text search fallback
+- **Search**: Vector similarity + AI-powered contextual responses
 
 ---
 
@@ -125,8 +131,8 @@ At a Glance
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Faheem12005/clinicalcopilot.git
-cd clinicalcopilot
+git clone https://github.com/Aakash-Prasanna-03/Clinical-copilot.git
+cd Clinical-copilot
 ```
 
 ### 2. Automated Setup (Windows)
@@ -148,6 +154,9 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install Python dependencies
 pip install -r requirements.txt
 
+# Create .env file and add your Gemini API key
+echo "GEMINI_API_KEY=your_gemini_api_key_here" > .env
+
 # Initialize vector database (if patient data exists)
 python embed.py
 ```
@@ -160,6 +169,10 @@ cd frontend
 npm install
 # or
 pnpm install
+
+# Create .env.local file for Supabase (optional for authentication)
+echo "NEXT_PUBLIC_SUPABASE_URL=your_supabase_url" > .env.local
+echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key" >> .env.local
 ```
 
 ### 4. Start the Application
@@ -480,9 +493,9 @@ This project is inspired by the need to empower healthcare professionals with be
 ## 📞 Support & Contact
 
 ### Getting Help
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Faheem12005/clinicalcopilot/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/Faheem12005/clinicalcopilot/discussions)
-- 📧 **Email Support**: faheem.clinical@example.com
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Aakash-Prasanna-03/Clinical-copilot/issues)
+- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/Aakash-Prasanna-03/Clinical-copilot/discussions)
+- 📧 **Email Support**: aakashp0320@gmail.com
 - 💬 **Community Chat**: [Discord Server](https://discord.gg/clinicalcopilot)
 
 ### Community
@@ -499,9 +512,9 @@ This project is inspired by the need to empower healthcare professionals with be
 
 **Empowering Clinical Decision-Making with AI**
 
-[![GitHub stars](https://img.shields.io/github/stars/Faheem12005/clinicalcopilot?style=social)](https://github.com/Faheem12005/clinicalcopilot)
-[![GitHub forks](https://img.shields.io/github/forks/Faheem12005/clinicalcopilot?style=social)](https://github.com/Faheem12005/clinicalcopilot)
-[![GitHub watchers](https://img.shields.io/github/watchers/Faheem12005/clinicalcopilot?style=social)](https://github.com/Faheem12005/clinicalcopilot)
+[![GitHub stars](https://img.shields.io/github/stars/Aakash-Prasanna-03/Clinical-copilot?style=social)](https://github.com/Aakash-Prasanna-03/Clinical-copilot)
+[![GitHub forks](https://img.shields.io/github/forks/Aakash-Prasanna-03/Clinical-copilot?style=social)](https://github.com/Aakash-Prasanna-03/Clinical-copilot)
+[![GitHub watchers](https://img.shields.io/github/watchers/Aakash-Prasanna-03/Clinical-copilot?style=social)](https://github.com/Aakash-Prasanna-03/Clinical-copilot)
 
 ---
 
