@@ -453,41 +453,13 @@ We welcome contributions from the healthcare technology community!
 
 ## 📚 Resources
 
-### Documentation
-- 📖 [Clinical Workflow Guide](docs/clinical-workflows.md)
-- 🔗 [API Reference](docs/api-reference.md)
-- 🎨 [UI Component Library](docs/ui-components.md)
-- 🔒 [Security Guidelines](docs/security.md)
-- 📋 [FHIR Implementation](docs/fhir-guide.md)
-
 ### External Resources
+- **Synthea Synthetic Patient Dataset**: [Synthea Downloads](https://synthea.mitre.org/downloads)
 - **FHIR R4 Specification**: [HL7 FHIR](https://hl7.org/fhir/R4/)
 - **Clinical Guidelines**: [American Medical Association](https://www.ama-assn.org/)
 - **Medical Terminology**: [SNOMED CT](https://www.snomed.org/)
 - **Vector Databases**: [ChromaDB Documentation](https://docs.trychroma.com/)
 - **Healthcare Standards**: [HL7 International](https://www.hl7.org/)
-
-
-## 🙏 Acknowledgments
-
-### Built With Love For Healthcare
-- **Healthcare Professionals**: For their invaluable feedback and requirements
-- **Open Source Community**: For the amazing tools and libraries
-- **Medical Standards Organizations**: For maintaining healthcare interoperability standards
-
-### Special Thanks
-- **Next.js Team**: For the excellent React framework
-- **Flask Team**: For the lightweight Python framework
-- **ChromaDB**: For the powerful vector database solution
-- **OpenAI**: For advancing AI in healthcare applications
-- **shadcn/ui**: For the beautiful component library
-
-### Inspiration
-*"Technology should enhance the human touch in healthcare, not replace it."*
-
-This project is inspired by the need to empower healthcare professionals with better tools while maintaining the personal, caring relationship between providers and patients.
-
----
 
 ## 📞 Support & Contact
 
@@ -509,4 +481,4 @@ This project is inspired by the need to empower healthcare professionals with be
 
 *Made with ❤️ for the healthcare community*
 
-</div>" 
+</div>
