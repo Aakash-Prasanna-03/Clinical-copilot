@@ -1,79 +1,156 @@
 {
-  "patient": {
-    "name": "John Smith",
-    "gender": "male",
-    "birthDate": "1985-06-15",
-    "id": "patient-123"
-  },
   "conditions": [
-    {
-      "code": "E11.9",
-      "display": "Type 2 Diabetes Mellitus",
-      "dateRecorded": "2020-03-15"
-    },
-    {
-      "code": "I10",
-      "display": "Essential Hypertension",
-      "dateRecorded": "2019-11-20"
-    }
-  ],
-  "medications": [
-    {
-      "code": "316077",
-      "display": "Metformin 1000mg",
-      "dosage": "twice daily",
-      "startDate": "2020-03-20"
-    },
-    {
-      "code": "206313",
-      "display": "Lisinopril 10mg",
-      "dosage": "once daily",
-      "startDate": "2019-11-25"
-    }
+    "Body mass index 30+ - obesity (finding)",
+    "Received higher education (finding)",
+    "Not in labor force (finding)",
+    "Full-time employment (finding)",
+    "Acute bronchitis (disorder)",
+    "Acute viral pharyngitis (disorder)",
+    "Chronic low back pain (finding)",
+    "First degree burn",
+    "Limited social contact (finding)",
+    "Part-time employment (finding)",
+    "Chronic neck pain (finding)",
+    "Social isolation (finding)",
+    "Viral sinusitis (disorder)",
+    "Stress (finding)",
+    "Hypertension"
   ],
   "observations": [
-    {
-      "code": "8867-4",
-      "display": "Heart rate",
-      "value": 72,
-      "unit": "beats/min",
-      "date": "2023-09-01"
-    },
-    {
-      "code": "8480-6",
-      "display": "Blood pressure systolic",
-      "value": 128,
-      "unit": "mmHg",
-      "date": "2023-09-01"
-    },
-    {
-      "code": "8462-4",
-      "display": "Blood pressure diastolic",
-      "value": 82,
-      "unit": "mmHg",
-      "date": "2023-09-01"
-    },
-    {
-      "code": "2339-0",
-      "display": "Blood Glucose",
-      "value": 142,
-      "unit": "mg/dL",
-      "date": "2023-09-01"
-    }
+    "Erythrocytes [#/volume] in Blood by Automated count: 4.2916 10*6/uL",
+    "Platelet mean volume [Entitic volume] in Blood by Automated count: 12.127 fL",
+    "Leukocytes [#/volume] in Blood by Automated count: 6.4112 10*3/uL",
+    "Body Mass Index: 28.47 kg/m2",
+    "Respiratory rate: 13 /min",
+    "Respiratory rate: 15 /min",
+    "Erythrocyte distribution width [Entitic volume] by Automated count: 44.637 fL",
+    "Blood Pressure",
+    "Hemoglobin [Mass/volume] in Blood: 12.323 g/dL",
+    "Total score [AUDIT-C]: 3 {score}",
+    "Heart rate: 77 /min",
+    "Body Mass Index: 27.7 kg/m2",
+    "MCV [Entitic volume] by Automated count: 88.478 fL",
+    "High Density Lipoprotein Cholesterol: 65.6 mg/dL",
+    "Body Weight: 89 kg",
+    "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]",
+    "Body Mass Index: 29.19 kg/m2",
+    "Low Density Lipoprotein Cholesterol: 81.73 mg/dL",
+    "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]: 2 {score}",
+    "Body Weight: 83.9 kg",
+    "MCH [Entitic mass] by Automated count: 29.654 pg",
+    "Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE]",
+    "Heart rate: 93 /min",
+    "Heart rate: 82 /min",
+    "MCHC [Mass/volume] by Automated count: 33.977 g/dL",
+    "Heart rate: 83 /min",
+    "Triglycerides: 113.98 mg/dL",
+    "Respiratory rate: 14 /min",
+    "Body Weight: 89.5 kg",
+    "MCH [Entitic mass] by Automated count: 31.542 pg",
+    "Pain severity - 0-10 verbal numeric rating [Score] - Reported: 4 {score}",
+    "Hemoglobin [Mass/volume] in Blood: 14.604 g/dL",
+    "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+    "Total score [AUDIT-C]: 2 {score}",
+    "Heart rate: 91 /min",
+    "Platelet distribution width [Entitic volume] in Blood by Automated count: 356.17 fL",
+    "Platelets [#/volume] in Blood by Automated count: 317.9 10*3/uL",
+    "Body Mass Index: 29.07 kg/m2",
+    "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]: 1 {score}",
+    "Heart rate: 66 /min",
+    "Erythrocytes [#/volume] in Blood by Automated count: 5.0613 10*6/uL",
+    "Pain severity - 0-10 verbal numeric rating [Score] - Reported: 3 {score}",
+    "Body Weight: 91.9 kg",
+    "Heart rate: 65 /min",
+    "Platelets [#/volume] in Blood by Automated count: 218.63 10*3/uL",
+    "Leukocytes [#/volume] in Blood by Automated count: 6.8732 10*3/uL",
+    "High Density Lipoprotein Cholesterol: 65.3 mg/dL",
+    "Hematocrit [Volume Fraction] of Blood by Automated count: 35.486 %",
+    "Body Weight: 89.4 kg",
+    "Body Mass Index: 29.23 kg/m2",
+    "Drugs of abuse 5 panel - Urine by Screen method: Negative (qualifier value)",
+    "Low Density Lipoprotein Cholesterol: 96.02 mg/dL",
+    "Body Mass Index: 30 kg/m2",
+    "Triglycerides: 121.79 mg/dL",
+    "Total Cholesterol: 171.39 mg/dL",
+    "Body Height: 175 cm",
+    "Triglycerides: 130.86 mg/dL",
+    "MCV [Entitic volume] by Automated count: 85.829 fL",
+    "Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]: 8 {score}",
+    "Body Weight: 87.2 kg",
+    "Heart rate: 75 /min",
+    "Pain severity - 0-10 verbal numeric rating [Score] - Reported: 1 {score}",
+    "Platelet mean volume [Entitic volume] in Blood by Automated count: 11.933 fL",
+    "Platelet distribution width [Entitic volume] in Blood by Automated count: 199.38 fL",
+    "Hematocrit [Volume Fraction] of Blood by Automated count: 43.675 %",
+    "Total score [DAST-10]: 1 {score}",
+    "MCHC [Mass/volume] by Automated count: 33.032 g/dL",
+    "Body Weight: 84.8 kg",
+    "Total Cholesterol: 184.42 mg/dL",
+    "High Density Lipoprotein Cholesterol: 71.88 mg/dL",
+    "Body temperature: 37.644 Cel",
+    "Erythrocyte distribution width [Entitic volume] by Automated count: 43.464 fL",
+    "Tobacco smoking status NHIS: Never smoker",
+    "Total Cholesterol: 179.18 mg/dL",
+    "Pain intensity, Enjoyment of life, General activity (PEG) 3 item pain scale",
+    "Total score [HARK]",
+    "Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]: 1 {score}",
+    "Low Density Lipoprotein Cholesterol: 81.13 mg/dL",
+    "Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]: 3 {score}",
+    "Respiratory rate: 16 /min",
+    "Body Mass Index: 27.4 kg/m2"
   ],
-  "allergies": [
-    {
-      "code": "293937",
-      "display": "Penicillin",
-      "severity": "moderate",
-      "reaction": "rash"
-    }
+  "medications": [
+    "Acetaminophen 300 MG / Hydrocodone Bitartrate 5 MG Oral Tablet",
+    "Acetaminophen 325 MG Oral Tablet",
+    "72 HR Fentanyl 0.025 MG/HR Transdermal System",
+    "Hydrochlorothiazide 25 MG Oral Tablet"
   ],
   "procedures": [
+    "Assessment of substance use (procedure)",
+    "Medication Reconciliation (procedure)",
+    "Assessment of health and social care needs (procedure)",
+    "Screening for domestic abuse (procedure)",
+    "Screening for drug abuse (procedure)",
+    "Assessment using Alcohol Use Disorders Identification Test - Consumption (procedure)",
+    "Depression screening using Patient Health Questionnaire Two-Item score (procedure)",
+    "Depression screening (procedure)",
+    "Assessment of anxiety (procedure)"
+  ],
+  "allergies": [],
+  "diagnostic_reports": [
+    "Humiliation, Afraid, Rape, and Kick questionnaire [HARK]",
+    "Drug Abuse Screening Test-10 [DAST-10]",
+    "Complete blood count (hemogram) panel - Blood by Automated count",
+    "Patient Health Questionnaire 2 item (PHQ-2) [Reported]",
+    "Generalized anxiety disorder 7 item (GAD-7)",
+    "Alcohol Use Disorder Identification Test - Consumption [AUDIT-C]",
+    "Lipid Panel"
+  ],
+  "immunizations": [
+    "Influenza, seasonal, injectable, preservative free",
+    "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose",
+    "Td (adult) preservative free",
+    "Hep A, adult"
+  ],
+  "encounters": [
+    "Administration of vaccine to produce active immunity (procedure)",
+    "Encounter for symptom",
+    "Encounter for problem (procedure)",
+    "Emergency room admission (procedure)",
+    "General examination of patient (procedure)",
+    "Urgent care clinic (procedure)",
+    "Encounter for 'check-up'",
+    "Follow-up encounter (procedure)",
+    "Encounter for check up (procedure)"
+  ],
+  "careplans": [],
+  "claims_diagnoses": [],
+  "patient": [
     {
-      "code": "73761001",
-      "display": "Cholesterol screening",
-      "date": "2023-08-15"
+      "name": "Abe604 Schmidt332",
+      "gender": "male",
+      "birthDate": "1976-06-06"
     }
-  ]
+  ],
+  "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb"
 }
