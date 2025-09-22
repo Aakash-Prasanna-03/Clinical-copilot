@@ -16,19 +16,6 @@ At a Glance
 <br>
 <img width="1346" height="645" alt="Landing Page" src="./frontend/public/screenshot1.jpg" />
 <br>
-🌟Upload FHIR's or JSON<br>
-<br>
-<img width="1335" height="648" alt="Data Upload" src="./frontend/public/screenshot2.jpg" />
-<br>
-🌟Ask AI for Smarter Clinical Decisions<br>
-<br>
-<img width="1339" height="638" alt="AI Analysis" src="./frontend/public/screenshot3.jpg" />
-
-
-🌟Landing Page<br>
-<br>
-<img width="1346" height="645" alt="Landing Page" src="./frontend/public/screenshot1.jpg" />
-<br>
 🌟Ask AI for Smarter Clinical Decisions<br>
 <br>
 <img width="1339" height="638" alt="AI Analysis" src="./frontend/public/screenshot3.jpg" />
@@ -225,27 +212,48 @@ npm run dev
 #### Sample Patient Data Structure
 ```json
 {
-  "patient": [{
-    "name": "John Doe",
-    "gender": "male",
-    "birthDate": "1980-01-01",
-    "id": "patient-1"
-  }],
+  "patient": [
+    {
+      "name": "John Smith",
+      "gender": "male",
+      "birthDate": "1990-01-01"
+    }
+  ],
+  "patient_id": "sample-patient-id",
   "conditions": [
     "Hypertension",
-    "Type 2 Diabetes Mellitus",
-    "Hyperlipidemia"
-  ],
-  "medications": [
-    "Lisinopril 10mg daily",
-    "Metformin 1000mg twice daily"
+    "Chronic low back pain (finding)",
+    "Body mass index 30+ - obesity (finding)"
   ],
   "observations": [
-    "Blood pressure: 128/82 mmHg",
-    "HbA1c: 7.2%",
-    "LDL cholesterol: 145 mg/dL"
+    "Body Mass Index: 30 kg/m2",
+    "Heart rate: 75 /min",
+    "Blood Pressure",
+    "Body Weight: 89.4 kg",
+    "Body Height: 175 cm"
   ],
-  "allergies": ["Penicillin", "Shellfish"]
+  "medications": [
+    "Hydrochlorothiazide 25 MG Oral Tablet",
+    "Acetaminophen 325 MG Oral Tablet"
+  ],
+  "procedures": [
+    "Assessment of health and social care needs (procedure)",
+    "Medication Reconciliation (procedure)"
+  ],
+  "allergies": [],
+  "diagnostic_reports": [
+    "Complete blood count (hemogram) panel - Blood by Automated count",
+    "Lipid Panel"
+  ],
+  "immunizations": [
+    "Influenza, seasonal, injectable, preservative free"
+  ],
+  "encounters": [
+    "General examination of patient (procedure)",
+    "Follow-up encounter (procedure)"
+  ],
+  "careplans": [],
+  "claims_diagnoses": []
 }
 ```
 
@@ -459,26 +467,6 @@ We welcome contributions from the healthcare technology community!
 - **Vector Databases**: [ChromaDB Documentation](https://docs.trychroma.com/)
 - **Healthcare Standards**: [HL7 International](https://www.hl7.org/)
 
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License - Healthcare Innovation
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
-
----
 
 ## 🙏 Acknowledgments
 
@@ -504,8 +492,6 @@ This project is inspired by the need to empower healthcare professionals with be
 ## 📞 Support & Contact
 
 ### Getting Help
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Aakash-Prasanna-03/Clinical-copilot/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/Aakash-Prasanna-03/Clinical-copilot/discussions)
 - 📧 **Email Support**: aakashp0320@gmail.com
 ---
 
