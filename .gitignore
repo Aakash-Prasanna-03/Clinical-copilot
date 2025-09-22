@@ -210,3 +210,41 @@ Dockerfile.local
 *.xlsx
 *.xls
 *.json.bak
+
+# Package lock files (keep only one type)
+package-lock.json
+yarn.lock
+
+# Batch and shell scripts (if auto-generated)
+# Uncomment if these are generated files
+# setup.bat
+# setup.sh
+# start.bat
+
+# Version directories
+src/0.3.0
+
+# Test and debug files
+test_*.py
+debug_*.py
+check.py
+
+# Specific patient data files
+patient_data.json
+patient_snapshot.json
+
+# Frontend specific ignores
+frontend/.env.local
+frontend/.gitignore
+frontend/.next/
+frontend/node_modules/
+
+# Additional temporary and cache files
+*.pyc
+.pytest_cache/
+__pycache__/
+
+# Documentation that might be auto-generated
+# CONNECTION_GUIDE.md
+# GEMINI_COPILOT_SETUP.md
+# UI_UX_IMPROVEMENTS.md
