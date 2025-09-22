@@ -496,14 +496,6 @@ This project is inspired by the need to empower healthcare professionals with be
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Aakash-Prasanna-03/Clinical-copilot/issues)
 - 💡 **Feature Requests**: [GitHub Discussions](https://github.com/Aakash-Prasanna-03/Clinical-copilot/discussions)
 - 📧 **Email Support**: aakashp0320@gmail.com
-- 💬 **Community Chat**: [Discord Server](https://discord.gg/clinicalcopilot)
-
-### Community
-- 🌟 **Star** us on GitHub if you find this project helpful
-- 🐦 **Follow** us on Twitter [@ClinicalCopilot](https://twitter.com/clinicalcopilot)
-- 📝 **Blog**: [Medium Publications](https://medium.com/@clinicalcopilot)
-- 📺 **YouTube**: [Video Tutorials](https://youtube.com/@clinicalcopilot)
-
 ---
 
 <div align="center">
