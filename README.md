@@ -14,15 +14,15 @@ At a Glance
 
 🌟Landing Page<br>
 <br>
-<img width="1346" height="645" alt="Landing Page" src="./frontend/public/screenshot1.jpg" />
-<br>
-🌟Ask AI for Smarter Clinical Decisions<br>
-<br>
 <img width="1339" height="638" alt="AI Analysis" src="./frontend/public/screenshot3.jpg" />
 <br>
 🌟Upload FHIR's or JSON<br>
 <br>
 <img width="1335" height="648" alt="Data Upload" src="./frontend/public/screenshot2.jpg" />
+<br>
+🌟Ask AI for Smarter Clinical Decisions<br>
+<br>
+<img width="1346" height="645" alt="Landing Page" src="./frontend/public/screenshot1.jpg" />
 <br>
 ---
 
